@@ -11,7 +11,18 @@
 </head>
 <body>
 <header>
+    <nav class="navbar position-fixed top-0" id="navbar">
+        <div class="container-fluid">
+            <p id="greetings"></p>
 
+            <div id="right_nav" >
+                <p class="mb-0 me-2"></p>
+                <div class="circle">
+                    <img id="session_img" src="assets/image/user.png" class="w-100 h-100 object-fit-cover">
+                </div>
+            </div>
+        </div>
+    </nav>
 </header>
 <main>
     <!--     Login-->
@@ -46,10 +57,107 @@
         </div>
 
     </section>
+
+
+    <aside id="sidebar" class="position-fixed  ">
+        <div class="brand-title">POS System</div>
+
+        <div class="section-label">Overview</div>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link " href="#dashboard_section"  id="nav_dashboard">Dashboard</a>
+            </li>
+        </ul>
+
+        <div class="section-label">Management</div>
+        <ul class="nav flex-column">
+            <li class="nav-item" id="nav-customers">
+                <a class="nav-link" href="#customers_section" id="nav_customers">Customers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#items_section" id="nav_items">Items</a>
+            </li>
+        </ul>
+
+        <div class="section-label">Orders</div>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="nav_place_order">Place Order</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="nav_order_history">Order History</a>
+            </li>
+        </ul>
+
+        <div class="logout-box">
+            <button class="btn btn-secondary w-100" id="logout-btn">Log Out</button>
+        </div>
+    </aside>
+
+    <section id="dashboard_section" class="content page">
+
+
+        <div class="row g-3 mb-4">
+            <div class="col-6 col-md-3">
+                <div class="table-card p-3 text-center">
+                    <div id="stat_customers">0</div>
+                    <div>Total Customers</div>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <div class="table-card p-3 text-center">
+                    <div id="stat_orders">5</div>
+                    <div>Active orders</div>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <div class="table-card p-3 text-center">
+                    <div id="">5</div>
+                    <div>Total orders</div>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <div class="table-card p-3 text-center">
+                    <div id="">5</div>
+                    <div>Revenue Generated</div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <h5 class="mb-2">Recent Transitions</h5>
+        <div class="table-responsive">
+            <table class="table align-middle custom-table">
+
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+
+                <tbody id="customer_table">
+
+                </tbody>
+
+            </table>
+        </div>
+    </section>
+
+
 </main>
 <script src="assets/lib/jquery-4.0.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 <script src="controller/LoginController.js"></script>
+<script src="controller/asidecontroller.js"></script>
+<script type="module" src="controller/DashboardController.js"></script>
 </body>
 </html>
 
