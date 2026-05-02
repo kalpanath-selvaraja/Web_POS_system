@@ -3,7 +3,7 @@ html, body {
 }
 
 main {
-    height: 100%;
+    min-height: 100vh;
 }
 
 
@@ -21,6 +21,8 @@ main {
 
 }
 
+
+
 .title{
     font-size: 2.5rem;
     font-weight: bold;
@@ -37,4 +39,20 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f0f2f5;
+}
+
+
+
+
+/*Media Queries*/
+
+
+@media (max-width: 567px) {
+    .right-side {
+        background: linear-gradient(rgba(26,58,107,0.8), rgba(26,58,107,0.8)),
+        url("../image/login_bg_image.jpg");
+        background-size: cover;
+        background-position: center;
+        color: white;
+    }
 }
