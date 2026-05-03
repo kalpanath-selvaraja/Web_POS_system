@@ -1,9 +1,45 @@
 import { getCustomerDataById, addCustomerData,getCustomerData,updateCustomerData,deleteCustomerData} from '../model/CustomerModel.js';
-
+import{check_phone,check_email} from '../utils/regex.js'
 $(document).ready(function () {
 
     // to identify the current requirement
     let customerUpdate = false;
+
+
+    // loadCustomerTable
+    const loadCustomerData = () => {
+        $('#customer_tbody').empty();
+
+        let customer_db = getCustomerData();
+        customer_db.forEach((customer, index) => {
+            let new_row =
+                `<tr data-index="${index}"> 
+                    <td>${customer.id}</td>
+                    <td>${customer.name}</td>
+                    <td>${customer.phone}</td>
+                    <td>${customer.email}</td>
+                    <td>${customer.address}</td>
+                    <td class="text-end">
+                    <button class="btn btn-outline-primary btn-customer-view">View</button>
+                    <button class="btn btn-outline-warning btn-customer-update">Update</button>
+                    <button class="btn btn-outline-danger btn-customer-delete">Delete</button>
+                    </td>
+                </tr>`;
+
+            $('#customer_tbody').append(new_row);
+
+        })
+    }
+
+    // reset form
+    function resetCustomerForm() {
+
+        $('#customerForm')[0].reset();
+
+        $('#customer_id_input').prop('readonly', false);
+
+        customerUpdate = false;
+    }
 
     // Save and update Customer
     $('#customer_btn_save').on('click', function () {
@@ -28,13 +64,13 @@ $(document).ready(function () {
             return;
         }
 
-        if (phone === "") {
-            Swal.fire({ icon: "error", title: "Phone is required!" });
+        if (!check_phone(phone)) {
+            Swal.fire({ icon: "error", title: "Contact number is Invalid!" });
             return;
         }
 
-        if (mail === "") {
-            Swal.fire({ icon: "error", title: "Email is required!" });
+        if (!check_email(mail)) {
+            Swal.fire({ icon: "error", title: "Email is Invalid!" });
             return;
         }
 
@@ -53,7 +89,7 @@ $(document).ready(function () {
             }
 
             addCustomerData(id, name, phone, mail, address);
-
+            $('#customerForm')[0].reset();
             Swal.fire({
                 icon: "success",
                 title: "Customer Saved Successfully!"
@@ -62,7 +98,7 @@ $(document).ready(function () {
             updateCustomerData(id, name, phone, mail, address);
 
             Swal.fire({ icon: "success", title: "Customer Updated Successfully!" });
-
+            $('#customerForm')[0].reset();
             customerUpdate = false;
         }
 
@@ -78,30 +114,10 @@ $(document).ready(function () {
 
     });
 
-    // loadCustomerTable
-    const loadCustomerData = () => {
-        $('#customer_tbody').empty();
-
-        let customer_db = getCustomerData();
-        customer_db.forEach((customer, index) => {
-            let new_row =
-                `<tr data-index="${index}"> 
-                    <td>${customer.id}</td>
-                    <td>${customer.name}</td>
-                    <td>${customer.email}</td>
-                    <td>${customer.phone}</td>
-                    <td>${customer.address}</td>
-                    <td class="text-end">
-                    <button class="btn btn-outline-primary btn-customer-view">View</button>
-                    <button class="btn btn-outline-warning btn-customer-update">Update</button>
-                    <button class="btn btn-outline-danger btn-customer-delete">Delete</button>
-                    </td>
-                </tr>`;
-
-            $('#customer_tbody').append(new_row);
-
-        })
-    }
+    // cancel btn
+    $('#customer_btn_cancel').on('click', function () {
+        resetCustomerForm();
+    })
 
     // customer view Action button
     $(document).on('click', '.btn-customer-view', function () {
@@ -115,7 +131,7 @@ $(document).ready(function () {
         $('#view_id').text(customer.id);
         $('#view_name').text(customer.name);
         $('#view_phone').text(customer.phone);
-        $('#view_mail').text(customer.mail);
+        $('#view_mail').text(customer.email);
         $('#view_address').text(customer.address);
 
         let modal = new bootstrap.Modal(document.getElementById('customer_view_modal'));
@@ -136,7 +152,7 @@ $(document).ready(function () {
         $('#customer_id_input').val(customer.id);
         $('#customer_name_input').val(customer.name);
         $('#customer_contact_input').val(customer.phone);
-        $('#customer_mail_input').val(customer.mail);
+        $('#customer_mail_input').val(customer.email);
         $('#customer_address_input').val(customer.address);
 
         $('#customer_id_input').prop('readonly', true);
@@ -146,6 +162,7 @@ $(document).ready(function () {
 
     });
 
+    // delete Customer
     $(document).on('click', '.btn-customer-delete', function () {
         let index = $(this).closest('tr').data('index');
         let customer = getCustomerData()[index];
@@ -194,8 +211,8 @@ $(document).ready(function () {
                     `<tr data-index="${index}"> 
                         <td>${customer.id}</td>
                         <td>${customer.name}</td>
-                        <td>${customer.email}</td>
                         <td>${customer.phone}</td>
+                        <td>${customer.email}</td>
                         <td>${customer.address}</td>
                         <td class="text-end">
                         <button class="btn btn-outline-primary btn-customer-view">View</button>
@@ -209,7 +226,10 @@ $(document).ready(function () {
         })
     })
 
-
+    // when exiting the form without using the cancel btn this will reset the data
+    $('#customer_modal').on('hidden.bs.modal', function () {
+        resetCustomerForm();
+    })
 
     loadCustomerData();
 
