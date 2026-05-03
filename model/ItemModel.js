@@ -72,5 +72,21 @@ const deleteItem = (id) => {
     }
 }
 
+const getItemDataById = (id) => {
+    return Item_db.find(item =>item.id==id);
+}
 
-export {getItemData,deleteItem,addItem};
+
+
+const updateItem = (id, name, price, qty, category) => {
+    let Item = Item_db.find(item => item.id == id);
+
+    if (Item) {
+        Item.name = name;
+        Item.price = price;
+        Item.qty = qty;
+        Item.category = category;
+    }
+}
+
+export {getItemData,deleteItem,getItemDataById,addItem,updateItem};
