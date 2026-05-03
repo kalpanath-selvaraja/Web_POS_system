@@ -64,5 +64,13 @@ const addItem = (id, name, price, qty, category) => {
 
     Item_db.push(newItem);
 }
+const deleteItem = (id) => {
+    let index = Item_db.find(item => item.id == id);
 
-export {getItemData,addItem};
+    if (index !== -1) {
+        Item_db.splice(index, 1);
+    }
+}
+
+
+export {getItemData,deleteItem,addItem};
