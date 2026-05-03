@@ -54,6 +54,27 @@ $(document).ready(function(){
 
     });
 
+    // customer Item Action button
+    $(document).on('click', '.btn-item-update', function () {
+        let index = $(this).closest('tr').data('index');
+
+        let item = getItemData()[index];
+
+        itemUpdate = true;
+
+        $('#item_id_input').val(item.id);
+        $('#item_name_input').val(item.name);
+        $('#item_price_input').val(item.price);
+        $('#item_QTY_input').val(item.qty);
+        $('#item_categories_input').val(item.category);
+
+        $('#item_id_input').prop('readonly', true);
+
+        let modal = new bootstrap.Modal(document.getElementById('items_modal'));
+        modal.show();
+
+    });
+
 
 
     loadItemData();
