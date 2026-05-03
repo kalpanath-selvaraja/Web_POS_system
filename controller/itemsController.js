@@ -4,7 +4,8 @@ import{check_phone,check_email} from '../utils/regex.js'
 
 $(document).ready(function(){
 
-
+    // to identify the current requirement
+    let itemUpdate = false;
 
 // loadItemTable
     const loadItemData = () => {
@@ -106,7 +107,82 @@ $(document).ready(function(){
     });
 
 
+    // Save and update Item
+    $('#items_btn_save').on('click', function () {
 
+        console.log("save");
+
+        $('#item_id_input').prop('readonly', false);
+
+        let id = $('#item_id_input').val();
+        let name = $('#item_name_input').val();
+        let price = $('#item_price_input').val();
+        let qty = $('#item_QTY_input').val();
+        let category = $('#item_categories_input').val();
+
+        document.activeElement.blur();
+
+        if (id === "") {
+            Swal.fire({ icon: "error", title: "Invalid ID!" });
+            return;
+        }
+
+        if (name === "") {
+            Swal.fire({ icon: "error", title: "Name is required!" });
+            return;
+        }
+
+        if (price === "") {
+            Swal.fire({ icon: "error", title: "Price is Invalid!" });
+            return;
+        }
+
+        if (qty === "") {
+            Swal.fire({ icon: "error", title: "Quantity is Invalid!" });
+            return;
+        }
+
+        if (category === "") {
+            Swal.fire({ icon: "error", title: "Category is required!" });
+            return;
+        }
+
+
+        if (!itemUpdate){
+
+
+            if (getItemDataById(id)) {
+                Swal.fire({ icon: "error", title: "ID already exists!" });
+                return;
+            }
+
+            console.log(id, name, price, qty, category);
+            addItem(id, name, price, qty, category);
+            $('#customerForm')[0].reset();
+            Swal.fire({
+                icon: "success",
+                title: "Customer Saved Successfully!"
+            });
+
+        }else{
+            updateItem(id, name, price, qty, category);
+
+            Swal.fire({ icon: "success", title: "Customer Updated Successfully!" });
+            $('#itemsForm')[0].reset();
+            itemUpdate = false;
+        }
+
+
+        loadItemData();
+
+        let modalEl = document.getElementById('items_modal');
+        let modal = bootstrap.Modal.getInstance(modalEl);
+
+        if (modal) {
+            modal.hide();
+        }
+
+    });
 
     loadItemData();
 })
