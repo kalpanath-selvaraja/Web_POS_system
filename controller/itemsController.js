@@ -75,6 +75,37 @@ $(document).ready(function(){
 
     });
 
+    // delete Item
+    $(document).on('click', '.btn-item-delete', function () {
+        let index = $(this).closest('tr').data('index');
+        let item = getItemData()[index];
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                deleteItem(item.id);
+                loadItemData();
+
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                });
+            }
+        });
+
+
+    });
+
+
 
 
     loadItemData();
