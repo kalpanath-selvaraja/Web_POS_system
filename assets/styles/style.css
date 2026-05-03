@@ -202,8 +202,23 @@ body {
 }
 
 
+/* ── SEARCH ROW ── */
+.search-row { display: flex; gap: 10px; margin-bottom: 20px; }
+.search-row .form-control { font-size: 13px; border-color: var(--border); }
+.search-row .form-control:focus { box-shadow: none; border-color: var(--sidebar-accent); }
 
 
+.search-input {
+    flex: 1;           /* THIS is the key */
+    height: 42px;
+    border-radius: 10px;
+}
+
+.add-btn {
+    height: 42px;
+    white-space: nowrap;
+    border-radius: 10px;
+}
 
 
 

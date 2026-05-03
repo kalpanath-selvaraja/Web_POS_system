@@ -12,7 +12,21 @@ $(document).ready(function () {
         $('#dashboard_table_body').empty();
 
         customer_db.map((item , index) => {
-            let new_row = `<tr data-index="${index}"> <td>${item.id}</td> <td>${item.name}</td> <td>${item.phone}</td> <td>${item.email}</td> <td>${item.status}</td> </tr>`;
+            let new_row =
+                `<tr data-index="${index}"> 
+                    <td>${item.id}</td>
+                    <td>${item.name}</td>
+                    <td>${item.phone}</td>
+                    <td>${item.address}</td>
+                    <td class="text-end">
+                    <button class="btn btn-outline-primary">Edit</button>
+                    <button class="btn btn-outline-danger">Delete</button>
+                    </td>
+                </tr>
+                    `;
+
+
+
             $('#customer_table').append(new_row);
         })
     }
