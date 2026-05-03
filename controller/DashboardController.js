@@ -4,14 +4,14 @@ $(document).ready(function () {
 
     function updateStats() {
         $("#stat_customers").text(customer_db.length);
-        console.log($("#stat_customers").length);
+        console.log(customer_db.length);
     }
 
     const loadTable = () => {
 
         $('#dashboard_table_body').empty();
 
-        customer_db.map((item , index) => {
+        customer_db.forEach((item , index) => {
             let new_row =
                 `<tr data-index="${index}"> 
                     <td>${item.id}</td>
@@ -27,7 +27,7 @@ $(document).ready(function () {
 
 
 
-            $('#customer_table').append(new_row);
+            $('#dashboard_tbody').append(new_row);
         })
     }
 
@@ -40,5 +40,7 @@ $(document).ready(function () {
     greetings();
     updateStats();
     loadTable();
+
+
 
 });

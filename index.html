@@ -132,7 +132,6 @@
         <h5 class="mb-2">Recent Transitions</h5>
 
         <div class="table-card p-3">
-
             <div class="table-responsive">
                 <table class="table align-middle table-borderless custom-table">
 
@@ -146,12 +145,11 @@
                     </tr>
                     </thead>
 
-                    <tbody id="customer_table">
+                    <tbody id="dashboard_tbody">
                     </tbody>
 
                 </table>
             </div>
-
         </div>
     </section>
 
@@ -160,8 +158,10 @@
 
     <section id="customers_section" class="content page">
         <h4 class="mb-4">Customer Management</h4>
+
         <div class="mb-4 search-row d-flex gap-2 mb-4">
-            <input type="text" id="customer_name" class="form-control search-input"  placeholder="Customer Name">
+
+            <input type="text" id="customer_search" class="form-control search-input"  placeholder="Customer Name">
             <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#customer_modal">
                 + Add Customer
             </button>
@@ -178,28 +178,35 @@
 
                                <div class="col-md mb-3">
                                    <label class="form-label">Customer ID</label>
-                                   <input type="text" id="cust_id" class="form-control" placeholder="C001">
+                                   <input type="text" id="customer_id_input" class="form-control" placeholder="C001">
                                </div>
 
                                <div class="col-md mb-3">
                                    <label class="form-label">Full Name</label>
-                                   <input type="text" id="cust_name" class="form-control" placeholder="Full name">
+                                   <input type="text" id="customer_name_input" class="form-control" placeholder="Full name">
                                </div>
 
                                <div class="col-md mb-3">
                                    <label class="form-label">Contact No</label>
-                                   <input type="text" id="cust_contact" class="form-control" placeholder="Number">
+                                   <input type="text" id="customer_contact_input" class="form-control" placeholder="Number">
                                </div>
+
+                                <div class="col-md mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="text" id="customer_mail_input" class="form-control" placeholder="@mail">
+                                </div>
 
                                <div class="col-md mb-3">
                                    <label class="form-label">Address</label>
-                                   <input type="text" id="cust_address" class="form-control" placeholder="Address">
+                                   <input type="textArea" id="customer_address_input" class="form-control" placeholder="Address">
                                </div>
 
-                                <button type="button" id="btn_save_cust" class="btn btn-primary">Save</button>
-                                <button type="button" id="btn_cancel_cust" class="btn btn-warning" data-bs-dismiss="modal">Cancel</button>
-
                             </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="customer_btn_cancel" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" id="customer_btn_save"  class="btn btn-primary">Save Customer</button>
+
                         </div>
                     </div>
                 </div>
@@ -208,30 +215,80 @@
 
         </div>
 
-        <div class="table-responsive ">
-            <table class="table table-borderless text-center">
-                <thead class="table-">
-                <tr>
-                    <th>Customer ID</th>
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th>Total Orders</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody id="customer_table_body"></tbody>
-            </table>
+        <div class="table-card p-3">
+            <div class="table-responsive">
+                <table class="table align-middle table-borderless custom-table">
+
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="customer_tbody">
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+
+        <div class="modal" id="customer_view_modal">
+
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Customer Details</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-2">
+                            <div class="col-4 fw-bold">ID</div>
+                            <div class="col-8" id="view_id"></div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-4 fw-bold">Name</div>
+                            <div class="col-8" id="view_name"></div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-4 fw-bold">Phone</div>
+                            <div class="col-8" id="view_phone"></div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-4 fw-bold">Email</div>
+                            <div class="col-8" id="view_mail"></div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-4 fw-bold">Address</div>
+                            <div class="col-8" id="view_address"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="customer_btn_close" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
 </main>
 <script src="assets/lib/jquery-4.0.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 <script src="controller/LoginController.js"></script>
 <script src="controller/asidecontroller.js"></script>
 <script type="module" src="controller/DashboardController.js"></script>
+<script type="module" src="controller/CustomerController.js"></script>
+<script type="module" src="model/CustomerModel.js"></script>
 </body>
 </html>
 

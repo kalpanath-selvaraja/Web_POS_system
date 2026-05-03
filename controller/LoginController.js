@@ -1,10 +1,6 @@
 $(document).ready(function () {
 
 
-
-
-
-
     const USERS = {
         admin: "1234"
     };
@@ -37,11 +33,26 @@ $(document).ready(function () {
             sessionStorage.setItem("username", username);
 
             // switch UI
-            showApp();
+            Swal.fire({
+                title: "Login Successful!",
+                text: "Welcome back " + username,
+                icon: "success",
+                confirmButtonText: "Continue"
+            }).then(() => {
+
+
+                // redirect or show dashboard
+                showApp();
+            });
+
 
             console.log(USERS[username]);
         }else {
-            alert("Invalid username or password");
+            Swal.fire({
+                title: "Login Failed!",
+                text: "Invalid username or password",
+                icon: "error",
+            })
         }
 
     }
