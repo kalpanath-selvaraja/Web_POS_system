@@ -36,6 +36,25 @@ $(document).ready(function(){
         })
     }
 
+    // view btn
+    $(document).on('click', '.btn-item-view', function () {
+        let index = $(this).closest('tr').data('index');
+
+        let item = getItemData()[index];
+
+
+        $('#items_view_id').text(item.id);
+        $('#items_view_name').text(item.name);
+        $('#items_view_price').text(item.price);
+        $('#items_view_qty').text(item.qty);
+        $('#items_view_category').text(item.category);
+
+        let modal = new bootstrap.Modal(document.getElementById('items_view_modal'));
+        modal.show();
+
+    });
+
+
 
     loadItemData();
 })
