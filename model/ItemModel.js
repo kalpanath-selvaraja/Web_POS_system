@@ -56,3 +56,13 @@ class Item{
 }
 
 
+const getItemData = () => {
+    return Item_db;
+}
+const addItem = (id, name, price, qty, category) => {
+    let newItem = new Item(id, name, price, qty, category);
+
+    Item_db.push(newItem);
+}
+
+export {getItemData,addItem};
