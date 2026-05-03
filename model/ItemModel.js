@@ -17,39 +17,39 @@ class Item{
         this.#item_category = item_category;
     }
 
-    get item_id() {
+    get id() {
         return this.#item_id;
     }
-    get item_name() {
+    get name() {
         return this.#item_name;
     }
-    get item_price() {
+    get price() {
         return this.#item_price;
 
     }
-    get item_quantity() {
+    get qty() {
         return this.#item_quantity;
     }
-    get item_category() {
+    get category() {
         return this.#item_category;
     }
 
-    set item_Id(id){
+    set Id(id){
         this.#item_id = id;
     }
 
-    set item_name(name){
+    set name(name){
         this.#item_name = name;
     }
 
-    set item_price(price){
+    set price(price){
         this.#item_price = price;
     }
 
-    set item_quantity(quantity){
+    set qty(quantity){
         this.#item_quantity = quantity;
     }
-    set item_category(category){
+    set category(category){
         this.#item_category = category;
     }
 
