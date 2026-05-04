@@ -144,7 +144,7 @@ $(document).ready(function () {
                         <td>
                             <div class="d-flex align-items-center gap-2">
                                 <button class="btn btn-sm btn-outline-secondary btn-minus">-</button>
-                                <span class="fw-bold">1</span>
+                                <span class="fw-bold qty">1</span>
                                 <button class="btn btn-sm btn-outline-secondary btn-plus">+</button>
                             </div>
                         </td>
@@ -160,6 +160,8 @@ $(document).ready(function () {
 
                 $('#Order_tbody').append(row);
 
+                calculateTotals();
+
             }
         })
 
@@ -174,12 +176,25 @@ $(document).ready(function () {
         let qty = parseInt(qtySpan.text());
 
         qtySpan.text(qty + 1);
+        calculateTotals()
 
     });
 
     // add minus in row
 
+    $(document).on('click', '.btn-minus', function () {
 
+        let row = $(this).closest('tr');
+
+        let qtySpan = row.find('.qty');
+        let qty = parseInt(qtySpan.text());
+
+        if (qty > 1 ){
+            qtySpan.text(qty - 1);
+            calculateTotals();
+        }
+
+    });
 
 
 
