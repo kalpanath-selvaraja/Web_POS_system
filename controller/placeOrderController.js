@@ -198,6 +198,25 @@ $(document).ready(function () {
 
 
 
+    function calculateTotals() {
+
+        let totalItems = 0;
+        let totalPrice = 0;
+
+        $('#Order_tbody tr').each(function () {
+
+            let row = $(this);
+
+            let price = parseFloat(row.find('td:nth-child(3)').text());
+            let qty = parseInt(row.find('.qty').text());
+
+            totalItems += qty;
+            totalPrice += price * qty;
+        });
+
+        $('#total_items').text(totalItems);
+        $('#total_price').text(totalPrice.toFixed(2));
+    }
 
 
 })
