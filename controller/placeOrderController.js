@@ -166,6 +166,20 @@ $(document).ready(function () {
     });
 
 
+    // add btn in row
+    $(document).on('click', '.btn-plus', function () {
+        let row = $(this).closest('tr');
+
+        let qtySpan = row.find('.qty');
+        let qty = parseInt(qtySpan.text());
+
+        qtySpan.text(qty + 1);
+
+    });
+
+    // add minus in row
+
+
 
 
 
