@@ -6,4 +6,12 @@ let customer_db = [
         { id: 'C004', name: 'Sofia Rodriguez', phone: '2345678901', email: 'sofia@gmail.com',   address: 'Negombo' }
     ];
 
-export {customer_db};
+
+let Item_db = [
+    { id: 'I001', name: 'Rice 1kg', price: 250, qty: 50, category: 'Food' },
+    { id: 'I002', name: 'Bread', price: 180, qty: 30, category: 'Food' },
+    { id: 'I003', name: 'Coke', price: 200, qty: 100, category: 'Drinks' },
+    { id: 'I004', name: 'T-Shirt', price: 1200, qty: 20, category: 'Clothing' }
+]
+
+export {customer_db,Item_db};
