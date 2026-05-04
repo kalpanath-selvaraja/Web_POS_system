@@ -1,7 +1,10 @@
 import {getCustomerData} from "../model/CustomerModel.js";
-import {getItemData} from "../model/ItemModel.js";
+import {addItem, getItemData} from "../model/ItemModel.js";
+import {getOrderData, addOrder}  from "../model/OrderModel.js";
 
 $(document).ready(function () {
+
+    let selectedCustomer = null;
 
     $('#order_customer_search').on('keyup', function () {
 
@@ -28,6 +31,7 @@ $(document).ready(function () {
                 `;
 
                 $('#customer_results').append(item);
+
             }
 
         });
@@ -40,13 +44,19 @@ $(document).ready(function () {
 
     $(document).on('click', '.customer-select', function () {
 
+
+
         let index =$(this).data('index');
 
         let customer = getCustomerData()[index];
 
+        selectedCustomer = customer.name;
+
         $('#order_customer_search').val(customer.name);
 
         $('#customer_results').empty();
+
+        updateSummaryUI();
     })
 
 
@@ -120,6 +130,7 @@ $(document).ready(function () {
 
              console.log(qty);
              qtySpan.text(qty + 1);
+             updateSummaryUI();
 
              return;
          }
@@ -162,6 +173,8 @@ $(document).ready(function () {
 
                 calculateTotals();
 
+                 updateSummaryUI();
+
             }
         })
 
@@ -177,6 +190,7 @@ $(document).ready(function () {
 
         qtySpan.text(qty + 1);
         calculateTotals()
+        updateSummaryUI();
 
     });
 
@@ -192,6 +206,7 @@ $(document).ready(function () {
         if (qty > 1 ){
             qtySpan.text(qty - 1);
             calculateTotals();
+            updateSummaryUI();
         }
 
     });
@@ -218,5 +233,107 @@ $(document).ready(function () {
         $('#total_price').text(totalPrice.toFixed(2));
     }
 
+    $('#clear_cart').on('click', function () {
+
+
+        $('#order_customer_search').val('');
+        $('#order_item_search').val('');
+        $('#Order_tbody').empty();
+        $('#total_items').text('0');
+        $('#total_price').text('0.00');
+        $('#items_description').empty();
+
+        selectedCustomer = null;
+        updateSummaryUI();
+
+    });
+
+    $('#checkout_btn').on('click', function () {
+
+        let total = 0;
+        let items = [];
+        $('#Order_tbody tr').each(function () {
+            let row = $(this);
+
+            let id = row.find('td:nth-child(1)').text();
+            let name = row.find('td:nth-child(2)').text();
+            let price = parseFloat(row.find('td:nth-child(3)').text());
+            let qty = parseInt(row.find('.qty').text());
+
+            let subtotal = price * qty;
+            total += subtotal;
+
+            items.push({
+                id,
+                name,
+                price,
+                qty,
+                subtotal
+            });
+
+
+
+        });
+
+        let order_id = "O" + Date.now(); // unique id , give to eah order
+        let date = new Date().toLocaleDateString();
+
+        addOrder(order_id,selectedCustomer , items, total, date);
+
+
+        $('#order_customer_search').val('');
+        $('#order_item_search').val('');
+        $('#Order_tbody').empty();
+        $('#total_items').text('0');
+        $('#total_price').text('0.00');
+
+
+        Swal.fire({
+            icon: "success",
+            title: "Customer Saved Successfully!"
+        });
+    })
+
+    $(document).on('click', '.btn-remove', function () {
+
+        $(this).closest('tr').remove();
+
+        calculateTotals();
+        updateSummaryUI();
+    });
+
+    function updateSummaryUI() {
+
+        // custome
+
+        $('#summary_customer').text(selectedCustomer || "No customer selected");
+
+        // items list
+        let itemsText = [];
+        let totalItems = 0;
+        let totalPrice = 0;
+
+        $('#Order_tbody tr').each(function () {
+
+            let row = $(this);
+
+            let name = row.find('td:nth-child(2)').text();
+            let price = parseFloat(row.find('td:nth-child(3)').text());
+            let qty = parseInt(row.find('.qty').text());
+
+            totalItems += qty;
+            totalPrice += price * qty;
+
+            itemsText.push(`${name} x${qty}`);
+        });
+
+        console.log(itemsText);
+
+        $('#items_description').html(itemsText.join("<br>"));
+        $('#total_items').text(totalItems);
+        $('#total_price').text(totalPrice.toFixed(2));
+
+
+    }
 
 })
