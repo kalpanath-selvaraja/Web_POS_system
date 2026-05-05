@@ -1,27 +1,21 @@
 
 import{getItemData,deleteItem,getItemDataById,addItem,updateItem} from '../model/ItemModel.js'
 
-
-$(document).ready(function(){
-
-    // to identify the current requirement
-    let itemUpdate = false;
-
 // loadItemTable
-    const loadItemData = () => {
-        $('#items_tbody').empty();
+export const loadItemData = () => {
+    $('#items_tbody').empty();
 
-        console.log("Items loaded");
+    console.log("Items loaded");
 
-        let item_db = getItemData();
+    let item_db = getItemData();
 
-        console.log(item_db);
+    console.log(item_db);
 
-        item_db.forEach((item, index) => {
+    item_db.forEach((item, index) => {
 
-            console.log(item.id);
-            let new_row =
-                `<tr data-index="${index}"> 
+        console.log(item.id);
+        let new_row =
+            `<tr data-index="${index}"> 
                     <td>${item.id}</td>
                     <td>${item.name}</td>
                     <td>${item.price}</td>
@@ -34,10 +28,17 @@ $(document).ready(function(){
                     </td>
                 </tr>`;
 
-            $('#items_tbody').append(new_row);
+        $('#items_tbody').append(new_row);
 
-        })
-    }
+    })
+}
+
+$(document).ready(function(){
+
+    // to identify the current requirement
+    let itemUpdate = false;
+
+
 
     // reset form
     function resetCustomerForm() {
@@ -236,4 +237,4 @@ $(document).ready(function(){
     })
 
     loadItemData();
-})
+});
