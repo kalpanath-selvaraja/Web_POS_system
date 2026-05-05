@@ -12,16 +12,14 @@
 <body>
 <header>
     <nav class="navbar position-fixed top-0" id="navbar">
-        <div class="container-fluid">
+        <div class="container-fluid" id="nav-container">
             <button id="hamburger_btn" class="btn p-0 me-3">
                 <span class="hamburgar_icon">☰</span>
             </button>
-            <p id="greetings"></p>
+
 
             <div id="right_nav" >
-                <div class="circle">
-                    <img id="session_img" src="assets/image/user.png" class="w-100 h-100 object-fit-cover">
-                </div>
+                <p id="greetings"></p>
             </div>
         </div>
     </nav>
@@ -107,24 +105,45 @@
 
         <div class="row g-3 mb-4">
             <div class="col-6 col-md-3">
-                <div class="table-card p-3 text-center">
-                    <div id="stat_customers">0</div>
-                    <div>Total Customers</div>
+                <div class="table-card p-3">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="stat-icon bg-primary-subtle text-primary">
+                            <img src="assets/image/customer_icon.png" class="icon_img"  >
+                        </div>
+                        <div>
+                            <div class="stat-value" id="stat_customers">0</div>
+                            <div class="stat-label">Total Customers</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
 
             <div class="col-6 col-md-3">
-                <div class="table-card p-3 text-center">
-                    <div id="stat_total_orders">0</div>
-                    <div>Total orders</div>
+                <div class="table-card p-3">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="stat-icon bg-success-subtle text-success">
+                            <img src="assets/image/Order_image.png" class="icon_img"  >
+                        </div>
+                        <div>
+                            <div class="stat-value" id="stat_total_orders">0</div>
+                            <div class="stat-label">Total Orders</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="col-6 col-md-3">
-                <div class="table-card p-3 text-center">
-                    <div id="stat_revenue">0</div>
-                    <div>Revenue Generated</div>
+                <div class="table-card p-3">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="stat-icon bg-warning-subtle text-warning">
+                            <img src="assets/image/revenue_icon.png" class="icon_img">
+                        </div>
+                        <div>
+                            <div class="stat-value" id="stat_revenue">0</div>
+                            <div class="stat-label">Revenue Generated</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -304,22 +323,22 @@
 
                                 <div class="col-md mb-3">
                                     <label class="form-label">Item ID</label>
-                                    <input type="text" id="item_id_input" class="form-control" placeholder="C001">
+                                    <input type="text" id="item_id_input" class="form-control" placeholder="I001">
                                 </div>
 
                                 <div class="col-md mb-3">
                                     <label class="form-label">Item Name</label>
-                                    <input type="text" id="item_name_input" class="form-control" placeholder="Full name">
+                                    <input type="text" id="item_name_input" class="form-control" placeholder="Item name">
                                 </div>
 
                                 <div class="col-md mb-3">
                                     <label class="form-label">price</label>
-                                    <input type="number" id="item_price_input" class="form-control" placeholder="Number">
+                                    <input type="number" id="item_price_input" class="form-control" placeholder="0.00">
                                 </div>
 
                                 <div class="col-md mb-3">
                                     <label class="form-label">Quantity</label>
-                                    <input type="number" id="item_QTY_input" class="form-control" placeholder="@mail">
+                                    <input type="number" id="item_QTY_input" class="form-control" placeholder="20">
                                 </div>
 
                                 <div class="col-md mb-3">
@@ -425,14 +444,14 @@
 
 <!--                Title-->
                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h5 class="mb-0 fw-semibold">Customer Lookup</h5>
+                    <h5 class="mb-0 fw-semibold">Customer Search</h5>
                     <span class="badge bg-primary-subtle text-primary">Search</span>
                 </div>
 
 <!--                Input-->
                 <div class="input-group">
                     <span class="input-group-text bg-white">
-                        <img src="assets/image/login_bg_image.jpg" alt="search" class="icon">
+                        <img src="assets/image/search_icon.png" alt="search" class="icon">
                     </span>
 
                     <input type="text" id="order_customer_search" class="form-control"placeholder="Enter customer number">
@@ -452,14 +471,14 @@
 
                 <!--                Title-->
                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h5 class="mb-0 fw-semibold">Items</h5>
+                    <h5 class="mb-0 fw-semibold">Items Search</h5>
                     <span class="badge bg-primary-subtle text-primary">Search</span>
                 </div>
 
                 <!--                Input-->
                 <div class="input-group">
                     <span class="input-group-text bg-white">
-                        <img src="assets/image/login_bg_image.jpg" alt="search" class="icon">
+                        <img src="assets/image/search_icon.png" alt="search" class="icon">
                     </span>
 
                     <input type="text" id="order_item_search" class="form-control"placeholder="Enter customer number">

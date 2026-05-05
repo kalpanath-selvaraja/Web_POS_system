@@ -30,9 +30,9 @@ const loadTable = () => {
 
 $(document).ready(function () {
 
-    // greetings
     function greetings() {
-        $('#greetings').text("Welcome Back, " + sessionStorage.getItem("username"));
+        let username = sessionStorage.getItem("username");
+        $('#greetings').html(`<span class="welcome-text">Welcome Back,</span> <span class="welcome-name">${username}</span>`);
     }
 
 
