@@ -1,6 +1,6 @@
 
 import{getItemData,deleteItem,getItemDataById,addItem,updateItem} from '../model/ItemModel.js'
-import{check_phone,check_email} from '../utils/regex.js'
+
 
 $(document).ready(function(){
 
@@ -11,6 +11,8 @@ $(document).ready(function(){
     const loadItemData = () => {
         $('#items_tbody').empty();
 
+        console.log("Items loaded");
+
         let item_db = getItemData();
 
         console.log(item_db);
@@ -20,7 +22,7 @@ $(document).ready(function(){
             console.log(item.id);
             let new_row =
                 `<tr data-index="${index}"> 
-                    <td>${item.item_id}</td>
+                    <td>${item.id}</td>
                     <td>${item.name}</td>
                     <td>${item.price}</td>
                     <td>${item.qty}</td>
@@ -35,6 +37,16 @@ $(document).ready(function(){
             $('#items_tbody').append(new_row);
 
         })
+    }
+
+    // reset form
+    function resetCustomerForm() {
+
+        $('#itemsForm')[0].reset();
+
+        $('#item_id_input').prop('readonly', false);
+
+        itemUpdate = false;
     }
 
     // view btn
@@ -183,6 +195,13 @@ $(document).ready(function(){
         }
 
     });
+
+
+
+    // when exiting the form without using the cancel btn this will reset the data
+    $('#items_modal').on('hidden.bs.modal', function () {
+        resetCustomerForm();
+    })
 
     loadItemData();
 })
