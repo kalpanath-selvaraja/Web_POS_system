@@ -1,4 +1,5 @@
 import { loadOrderHistory } from "../controller/OrderHistoryController.js";
+import {loadItemData} from "../controller/itemsController.js";
 
 import { loadDashboard } from "../controller/DashboardController.js";
 
@@ -11,10 +12,7 @@ $(document).ready(function () {
         $('#'+ sectionID).show();
 
     }
-    $("#nav_dashboard").click(function () {
-        showSection("dashboard_section");
-        loadDashboard();
-    });
+
 
     // hamburger btn
     $('#hamburger_btn').on('click', function () {
@@ -33,12 +31,24 @@ $(document).ready(function () {
     });
 
 // navigation fuction
-    $("#nav_dashboard").click(function () {showSection("dashboard_section");});
+    $("#nav_dashboard").click(function () {
+        showSection("dashboard_section");
+        loadDashboard();
+    });
+
+
     $("#nav_customers").click(function () {showSection("customers_section");});
-    $("#nav_items").click(function () {console.log("clicked");showSection("items_section");});
-    $("#nav_place_order").click(function () {console.log("clicked");showSection("placeOrder_section");});
+    $("#nav_items").click(function () {
+        showSection("items_section");
+        loadItemData();
+    });
+
+    $("#nav_place_order").click(function () {
+        showSection("placeOrder_section");
+    });
+
     $("#nav_order_history").click(function () {
-        console.log("clicked");
+        ;
         showSection("order_history_section");
         loadOrderHistory();
     });
