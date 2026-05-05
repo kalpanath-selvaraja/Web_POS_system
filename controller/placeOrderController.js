@@ -106,6 +106,84 @@ $(document).ready(function () {
         $('#item_results').empty();
     })
 
+// btn add on click
+    $('#item_add_btn').on('click', function () {
+
+
+
+
+         let Item_name =  $('#order_item_search').val();
+         $('#order_item_search').val('');
+
+         let code = Item_name.split(" - ");
+         let id = code[1];
+
+
+
+         if (id === "") {
+             alert("Please select an item first");
+             return;
+         }
+
+         let exits = $(` #Order_tbody tr[data-id="${id}"]`);
+
+         if (exits.length > 0) {
+             let qtySpan = exits.find('span');
+             let qty = parseInt(qtySpan.text());
+
+             console.log(qty);
+             qtySpan.text(qty + 1);
+             updateSummaryUI();
+
+             return;
+         }
+
+
+
+         let item_db = getItemData();
+
+
+
+        item_db.forEach((item, index) => {
+            if (item.id === id){
+
+
+                let row = `
+                    <tr data-index="${index}" data-id="${item.id}">
+                    
+                        <td>${item.id}</td>
+                        <td>${item.name}</td>
+                        <td>${item.price}</td>
+                    
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <button class="btn btn-sm btn-outline-secondary btn-minus">-</button>
+                                <span class="fw-bold qty">1</span>
+                                <button class="btn btn-sm btn-outline-secondary btn-plus">+</button>
+                            </div>
+                        </td>
+                    
+                        <td>${item.category}</td>
+                    
+                        <td class="text-end">
+                            <button class="btn btn-sm btn-danger btn-remove">Cancel</button>
+                        </td>
+                    
+                    </tr>
+                    `;
+
+                $('#Order_tbody').append(row);
+
+                calculateTotals();
+
+                 updateSummaryUI();
+
+            }
+        })
+
+    });
+
+
 
 
 })
