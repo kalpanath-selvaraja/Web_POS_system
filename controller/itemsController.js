@@ -196,7 +196,39 @@ $(document).ready(function(){
 
     });
 
+    // Item Search
+    $('#items_search').on('keyup', function () {
+        let name = $(this).val().toLowerCase();
 
+        if (name === "") {
+            loadItemData();
+            return;
+        }
+
+        let item_db = getItemData();
+
+        $('#items_tbody').empty();
+
+        item_db.forEach((item, index) => {
+            if (item.name.toLowerCase().includes(name)) {
+                let row =
+                    `<tr data-index="${index}"> 
+                        <td>${item.id}</td>
+                        <td>${item.name}</td>
+                        <td>${item.price}</td>
+                        <td>${item.qty}</td>
+                        <td>${item.category}</td>
+                        <td class="text-end">
+                        <button class="btn btn-outline-primary btn-item-view">View</button>
+                        <button class="btn btn-outline-warning btn-item-update">Update</button>
+                        <button class="btn btn-outline-danger btn-item-delete">Delete</button>
+                        </td>
+                    </tr>`;
+
+                $('#items_tbody').append(row);
+            }
+        })
+    })
 
     // when exiting the form without using the cancel btn this will reset the data
     $('#items_modal').on('hidden.bs.modal', function () {
