@@ -65,3 +65,10 @@ const getOrderData = () => {
     return order_db;
 }
 
+// add Orders
+const addOrder = (order_id , customer_name, items, total, date) => {
+    let newOrder = new Order(order_id , customer_name, items, total, date);
+
+    order_db.push(newOrder);
+}
+
