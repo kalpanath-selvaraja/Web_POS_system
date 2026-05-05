@@ -80,3 +80,10 @@ const getRecentOrders = () => {
 const getTotalOrders = () => {
     return order_db.length;
 }
+
+// revenue
+const getTotalRevenue = () => {
+    return order_db.reduce((sum, order) => sum + order.total, 0);
+}
+
+export {getOrderData,addOrder,getRecentOrders,getTotalOrders, getTotalRevenue}
