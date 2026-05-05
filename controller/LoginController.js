@@ -1,11 +1,12 @@
 $(document).ready(function () {
 
 
+/// the predifined users of the application
     const USERS = {
-        admin: "1234"
+        Kalpanath: "1234"
     };
 
-
+// show the login page only
     function showLogin() {
         $('#navbar').hide();
         $('#sidebar').hide();
@@ -13,6 +14,7 @@ $(document).ready(function () {
         $('#login').show();
     }
 
+    // show the App page only hide login
     function showApp() {
         $('#login').hide();
         $('#dashboard_section').show();
@@ -20,17 +22,19 @@ $(document).ready(function () {
         $('#sidebar').show();
     }
 
+    // Authentication
     function login() {
 
         const username = $('#username').val();
         const password = $('#password').val();
 
-        console.log("savdbsfn");
+
 
         if (USERS[username] && USERS[username] === password) {
 
             // save session
             sessionStorage.setItem("username", username);
+            $('#greetings').text("Welcome Back, " + username);
 
             // switch UI
             Swal.fire({
@@ -45,8 +49,6 @@ $(document).ready(function () {
                 showApp();
             });
 
-
-            console.log(USERS[username]);
         }else {
             Swal.fire({
                 title: "Login Failed!",
@@ -57,16 +59,19 @@ $(document).ready(function () {
 
     }
 
+    // logout feature
     function logout() {
         sessionStorage.removeItem("username");
         showLogin();
 
     }
 
+    // check if is a user loaged in
     function isLoggedIn() {
         return sessionStorage.getItem("username") !== null;
     }
 
+    // what to load , login or App
     function initiate(){
         if (isLoggedIn()){
             showApp();
@@ -76,6 +81,7 @@ $(document).ready(function () {
 
     }
 
+    // btn
     $('#btn_login').on('click', login);
     $('#logout-btn').on('click', logout);
 
