@@ -106,7 +106,7 @@ $(document).ready(function () {
         $('#item_results').empty();
     })
 
-// btn add on click
+// add btn click
     $('#item_add_btn').on('click', function () {
 
 
@@ -184,6 +184,72 @@ $(document).ready(function () {
     });
 
 
+    // add btn in row
+    $(document).on('click', '.btn-plus', function () {
+        let row = $(this).closest('tr');
 
+        let qtySpan = row.find('.qty');
+        let qty = parseInt(qtySpan.text());
+
+        qtySpan.text(qty + 1);
+        calculateTotals()
+        updateSummaryUI();
+
+    });
+
+    // add minus in row
+
+    $(document).on('click', '.btn-minus', function () {
+
+        let row = $(this).closest('tr');
+
+        let qtySpan = row.find('.qty');
+        let qty = parseInt(qtySpan.text());
+
+        if (qty > 1 ){
+            qtySpan.text(qty - 1);
+            calculateTotals();
+            updateSummaryUI();
+        }
+
+    });
+
+
+// claculate Totals
+    function calculateTotals() {
+
+        let totalItems = 0;
+        let totalPrice = 0;
+
+        $('#Order_tbody tr').each(function () {
+
+            let row = $(this);
+
+            let price = parseFloat(row.find('td:nth-child(3)').text());
+            let qty = parseInt(row.find('.qty').text());
+
+            totalItems += qty;
+            totalPrice += price * qty;
+        });
+
+        $('#total_items').text(totalItems);
+        $('#total_price').text(totalPrice.toFixed(2));
+    }
+
+    /// clear carts
+    $('#clear_cart').on('click', function () {
+
+
+        $('#order_customer_search').val('');
+        $('#order_item_search').val('');
+        $('#Order_tbody').empty();
+        $('#total_items').text('0');
+        $('#total_price').text('0.00');
+        $('#items_description').empty();
+
+        selectedCustomer = null;
+        updateSummaryUI();
+
+    });
 
 })
