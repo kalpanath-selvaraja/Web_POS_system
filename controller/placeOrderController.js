@@ -252,4 +252,139 @@ $(document).ready(function () {
 
     });
 
+    // check out
+    $('#checkout_btn').on('click', function () {
+
+        if (!selectedCustomer) {
+            Swal.fire({ icon: "warning", title: "Please select a customer!" });
+            return;
+        }
+
+        if ($('#Order_tbody tr').length === 0) {
+            Swal.fire({ icon: "warning", title: "No items in cart!" });
+            return;
+        }
+
+        let stockError = false;
+        $('#Order_tbody tr').each(function () {
+            let id = $(this).find('td:nth-child(1)').text();
+            let qty = parseInt($(this).find('.qty').text());
+            let currentItem = getItemData().find(i => i.id === id);
+
+            if (!currentItem || currentItem.qty < qty) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Not Enough Stock!",
+                    text: `${currentItem ? currentItem.name : id} only has ${currentItem ? currentItem.qty : 0} in stock.`
+                });
+                stockError = true;
+                return false;
+            }
+        });
+
+        if (stockError) return;
+
+
+
+
+        let total = 0;
+        let items = [];
+
+        $('#Order_tbody tr').each(function () {
+            let row = $(this);
+
+            let id = row.find('td:nth-child(1)').text();
+            let name = row.find('td:nth-child(2)').text();
+            let price = parseFloat(row.find('td:nth-child(3)').text());
+            let qty = parseInt(row.find('.qty').text());
+
+            let subtotal = price * qty;
+
+
+            let currentItem = getItemData().find(i => i.id === id);
+            let newQty = currentItem.qty - qty;
+
+            updateItem(id, currentItem.name, currentItem.price, newQty, currentItem.category);
+
+
+            total += subtotal;
+
+
+            items.push({
+                id,
+                name,
+                price,
+                qty,
+                subtotal
+            });
+
+
+
+        });
+
+        let order_id = "O" + Date.now(); // unique id , give to eah order
+        let date = new Date().toLocaleDateString();
+
+        addOrder(order_id,selectedCustomer , items, total, date);
+
+
+        $('#order_customer_search').val('');
+        $('#order_item_search').val('');
+        $('#Order_tbody').empty();
+        $('#total_items').text('0');
+        $('#total_price').text('0.00');
+        $('#items_description').empty();
+
+        selectedCustomer = null;
+        updateSummaryUI();
+        Swal.fire({
+            icon: "success",
+            title: "Customer Saved Successfully!"
+        });
+    })
+
+    // remove btn
+    $(document).on('click', '.btn-remove', function () {
+
+        $(this).closest('tr').remove();
+
+        calculateTotals();
+        updateSummaryUI();
+    });
+
+    // summary update
+    function updateSummaryUI() {
+
+        // custome
+
+        $('#summary_customer').text(selectedCustomer || "No customer selected");
+
+        // items list
+        let itemsText = [];
+        let totalItems = 0;
+        let totalPrice = 0;
+
+        $('#Order_tbody tr').each(function () {
+
+            let row = $(this);
+
+            let name = row.find('td:nth-child(2)').text();
+            let price = parseFloat(row.find('td:nth-child(3)').text());
+            let qty = parseInt(row.find('.qty').text());
+
+            totalItems += qty;
+            totalPrice += price * qty;
+
+            itemsText.push(`${name} x${qty}`);
+        });
+
+        console.log(itemsText);
+
+        $('#items_description').html(itemsText.join("<br>"));
+        $('#total_items').text(totalItems);
+        $('#total_price').text(totalPrice.toFixed(2));
+
+
+    }
+
 })
