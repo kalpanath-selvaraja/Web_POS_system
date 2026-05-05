@@ -76,3 +76,7 @@ const addOrder = (order_id , customer_name, items, total, date) => {
 const getRecentOrders = () => {
     return order_db.slice(-5);
 }
+// Total orders
+const getTotalOrders = () => {
+    return order_db.length;
+}
