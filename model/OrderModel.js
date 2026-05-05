@@ -65,10 +65,14 @@ const getOrderData = () => {
     return order_db;
 }
 
-// add Orders
+// add orders
 const addOrder = (order_id , customer_name, items, total, date) => {
     let newOrder = new Order(order_id , customer_name, items, total, date);
 
     order_db.push(newOrder);
 }
 
+// recent orders
+const getRecentOrders = () => {
+    return order_db.slice(-5);
+}
