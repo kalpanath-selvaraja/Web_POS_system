@@ -6,6 +6,14 @@ import { loadDashboard } from "../controller/DashboardController.js";
 
 $(document).ready(function () {
 
+
+
+    if (window.innerWidth <= 767) {
+        $('#sidebar').addClass('hidden');
+        $('#navbar').addClass('expanded');
+        $('.content').addClass('expanded');
+    }
+
     //  which sectionn to show when clicked on
     function showSection(sectionID){
         $('main section').hide();
