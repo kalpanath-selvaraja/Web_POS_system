@@ -71,6 +71,7 @@ $(document).ready(function () {
 
         if (!check_email(mail)) {
             Swal.fire({ icon: "error", title: "Email is Invalid!" });
+            console.log(mail)
             return;
         }
 
@@ -190,7 +191,7 @@ $(document).ready(function () {
         });
 
 
-    })
+    });
 
     // customer Search
     $('#customer_search').on('keyup', function () {
