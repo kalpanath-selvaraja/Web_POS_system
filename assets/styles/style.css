@@ -123,6 +123,10 @@ main {
     right: 10px;
 }
 
+.hamburgar_icon{
+  font-size:1.4rem;
+}
+
 /* content */
 .content {
     min-height: calc(100vh - 60px);

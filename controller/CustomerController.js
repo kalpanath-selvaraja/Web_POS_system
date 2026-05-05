@@ -1,5 +1,6 @@
 import { getCustomerDataById, addCustomerData,getCustomerData,updateCustomerData,deleteCustomerData} from '../model/CustomerModel.js';
 import{check_phone,check_email} from '../utils/regex.js'
+import{showAlert} from '../utils/alerts.js'
 $(document).ready(function () {
 
     // to identify the current requirement
@@ -55,28 +56,28 @@ $(document).ready(function () {
         document.activeElement.blur();
 
         if (id === "") {
-            Swal.fire({ icon: "error", title: "Invalid ID!" });
+            showAlert("ID is required!", "danger");
             return;
         }
 
         if (name === "") {
-            Swal.fire({ icon: "error", title: "Name is required!" });
+            showAlert("Name is required!", "danger");
             return;
         }
 
         if (!check_phone(phone)) {
-            Swal.fire({ icon: "error", title: "Contact number is Invalid!" });
+            showAlert("Contact number is invalid!", "danger");
             return;
         }
 
         if (!check_email(mail)) {
-            Swal.fire({ icon: "error", title: "Email is Invalid!" });
+            showAlert("Email is invalid!", "danger");
             console.log(mail)
             return;
         }
 
         if (address === "") {
-            Swal.fire({ icon: "error", title: "Address is required!" });
+            showAlert("Address is required!", "danger");
             return;
         }
 
@@ -85,22 +86,18 @@ $(document).ready(function () {
 
 
             if (getCustomerDataById(id)) {
-                Swal.fire({ icon: "error", title: "ID already exists!" });
+                showAlert("ID already exists!", "danger");
                 return;
             }
 
             addCustomerData(id, name, phone, mail, address);
             $('#customerForm')[0].reset();
-            Swal.fire({
-                icon: "success",
-                title: "Customer Saved Successfully!"
-            });
+            showAlert("Customer saved successfully!", "success");
         }else{
             updateCustomerData(id, name, phone, mail, address);
-
-            Swal.fire({ icon: "success", title: "Customer Updated Successfully!" });
             $('#customerForm')[0].reset();
             customerUpdate = false;
+            showAlert("Customer updated successfully!", "success");
         }
 
 
@@ -168,27 +165,11 @@ $(document).ready(function () {
         let index = $(this).closest('tr').data('index');
         let customer = getCustomerData()[index];
 
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-
-                deleteCustomerData(customer.id);
-                loadCustomerData();
-
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                });
-            }
-        });
+        if (window.confirm(`Are you sure you want to delete "${customer.name}"?`)) {
+            deleteCustomerData(customer.id);
+            loadCustomerData();
+            showAlert("Customer deleted successfully.", "success");
+        }
 
 
     });

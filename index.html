@@ -13,10 +13,12 @@
 <header>
     <nav class="navbar position-fixed top-0" id="navbar">
         <div class="container-fluid">
+            <button id="hamburger_btn" class="btn p-0 me-3">
+                <span class="hamburgar_icon">☰</span>
+            </button>
             <p id="greetings"></p>
 
             <div id="right_nav" >
-                <p class="mb-0 me-2"></p>
                 <div class="circle">
                     <img id="session_img" src="assets/image/user.png" class="w-100 h-100 object-fit-cover">
                 </div>
@@ -25,6 +27,12 @@
     </nav>
 </header>
 <main>
+
+
+    <div id="alert_container"
+         style="position: fixed; top: 70px; right: 20px; z-index: 9999; width: 320px;">
+    </div>
+
     <!--     Login-->
     <section class="container-fluid h-100" id="login">
 
@@ -47,7 +55,7 @@
                     </div>
 
                     <div class="mb-4">
-                        <label class="form-label">Username</label>
+                        <label class="form-label">Password</label>
                         <input type="password" id="password" class="form-control" placeholder="Password">
                     </div>
 
@@ -65,27 +73,27 @@
         <div class="section-label">Overview</div>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link " href="#dashboard_section"  id="nav_dashboard">Dashboard</a>
+                <a class="nav-link "   id="nav_dashboard">Dashboard</a>
             </li>
         </ul>
 
         <div class="section-label">Management</div>
         <ul class="nav flex-column">
-            <li class="nav-item" id="nav-customers">
-                <a class="nav-link" href="#customers_section" id="nav_customers">Customers</a>
+            <li class="nav-item">
+                <a class="nav-link"  id="nav_customers">Customers</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#items_section" id="nav_items">Items</a>
+                <a class="nav-link"  id="nav_items">Items</a>
             </li>
         </ul>
 
         <div class="section-label">Orders</div>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" href="#" id="nav_place_order">Place Order</a>
+                <a class="nav-link" id="nav_place_order">Place Order</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" id="nav_order_history">Order History</a>
+                <a class="nav-link"  id="nav_order_history">Order History</a>
             </li>
         </ul>
 
@@ -95,7 +103,7 @@
     </aside>
 
     <section id="dashboard_section" class="content page">
-
+        <h4 class="mb-4">DashBoard</h4>
 
         <div class="row g-3 mb-4">
             <div class="col-6 col-md-3">
@@ -105,23 +113,17 @@
                 </div>
             </div>
 
-            <div class="col-6 col-md-3">
-                <div class="table-card p-3 text-center">
-                    <div id="stat_orders">5</div>
-                    <div>Active orders</div>
-                </div>
-            </div>
 
             <div class="col-6 col-md-3">
                 <div class="table-card p-3 text-center">
-                    <div id="">5</div>
+                    <div id="stat_total_orders">0</div>
                     <div>Total orders</div>
                 </div>
             </div>
 
             <div class="col-6 col-md-3">
                 <div class="table-card p-3 text-center">
-                    <div id="">5</div>
+                    <div id="stat_revenue">0</div>
                     <div>Revenue Generated</div>
                 </div>
             </div>
@@ -137,11 +139,10 @@
 
                     <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Phone</th>
-                        <th>Address</th>
-                        <th class="text-end">Actions</th>
+                        <th>Order ID</th>
+                        <th>Customer Name</th>
+                        <th>Total Price</th>
+                        <th>Date</th>
                     </tr>
                     </thead>
 
@@ -159,7 +160,7 @@
     <section id="customers_section" class="content page">
         <h4 class="mb-4">Customer Management</h4>
 
-        <div class="mb-4 search-row d-flex gap-2 mb-4">
+        <div class="mb-4  d-flex gap-2 mb-4">
 
             <input type="text" id="customer_search" class="form-control search-input"  placeholder="Customer Name">
             <button class="btn btn-primary add-btn" data-bs-toggle="modal" data-bs-target="#customer_modal">
@@ -198,7 +199,7 @@
 
                                <div class="col-md mb-3">
                                    <label class="form-label">Address</label>
-                                   <input type="textArea" id="customer_address_input" class="form-control" placeholder="Address">
+                                   <input type="text" id="customer_address_input" class="form-control" placeholder="Address">
                                </div>
 
                             </form>
@@ -336,7 +337,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" id="items_btn_cancel" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" id="items_btn_save"  class="btn btn-primary">Save Customer</button>
+                            <button type="button" id="items_btn_save"  class="btn btn-primary">Save Item</button>
 
                         </div>
                     </div>
@@ -375,7 +376,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Customer Details</h5>
+                        <h5 class="modal-title">Item Details</h5>
                     </div>
                     <div class="modal-body">
                         <div class="row mb-2">
@@ -411,17 +412,188 @@
 
         </div>
     </section>
+
+
+<!--    place order-->
+
+    <section id="placeOrder_section" class="content page">
+        <h4 class="mb-4">Order Management</h4>
+
+        <div class="mb-4 search-row d-flex gap-2 mb-4">
+
+            <div class="card p-3 shadow-sm border-0 rounded-3 col-12">
+
+<!--                Title-->
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h5 class="mb-0 fw-semibold">Customer Lookup</h5>
+                    <span class="badge bg-primary-subtle text-primary">Search</span>
+                </div>
+
+<!--                Input-->
+                <div class="input-group">
+                    <span class="input-group-text bg-white">
+                        <img src="assets/image/login_bg_image.jpg" alt="search" class="icon">
+                    </span>
+
+                    <input type="text" id="order_customer_search" class="form-control"placeholder="Enter customer number">
+                </div>
+
+<!--                results dropdown -->
+                <div id="customer_results"class="list-group mt-2 position-absolute w-100 shadow-sm">
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="mb-4 search-row d-flex gap-2 mb-4">
+
+            <div class="card p-3 shadow-sm border-0 rounded-3 col-8">
+
+                <!--                Title-->
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h5 class="mb-0 fw-semibold">Items</h5>
+                    <span class="badge bg-primary-subtle text-primary">Search</span>
+                </div>
+
+                <!--                Input-->
+                <div class="input-group">
+                    <span class="input-group-text bg-white">
+                        <img src="assets/image/login_bg_image.jpg" alt="search" class="icon">
+                    </span>
+
+                    <input type="text" id="order_item_search" class="form-control"placeholder="Enter customer number">
+                </div>
+
+                <!--                results dropdown -->
+                <div id="item_results" class="list-group mt-2 position-absolute w-100 shadow-sm">
+                </div>
+
+            </div>
+
+            <div class="card p-3 shadow-sm border-0 rounded-3 col-4">
+
+                <!--                Title-->
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h5 class="mb-0 fw-semibold">Add Item</h5>
+                </div>
+
+                <button class="btn btn-primary" type="button" id="item_add_btn">+ Add Item</button>
+
+            </div>
+
+        </div>
+
+        <div class="row g-3 mb-4 search-row">
+            <!--        Table-->
+            <div class="col-12 col-md-6">
+                <div class="table-card p-3">
+                    <div class="table-responsive">
+                        <table class="table align-middle table-borderless custom-table">
+
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Qty</th>
+                                <th>Category</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                            </thead>
+
+                            <tbody id="Order_tbody">
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="table-card p-3">
+                    <h5 class="mb-3">Order Summary</h5>
+
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Customer:</span>
+                        <span id="summary_customer">-</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Items:</span>
+                        <div id="items_description"></div>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Total Items:</span>
+                        <span id="total_items">0</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Total Price:</span>
+                        <span id="total_price">0.00</span>
+                    </div>
+
+                    <button class="btn btn-success w-100 mb-2" id="checkout_btn">
+                        Checkout
+                    </button>
+
+                    <button class="btn btn-outline-danger w-100" id="clear_cart">
+                        Clear Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+
+
+    <section id="order_history_section" class="content page">
+        <h4 class="mb-4">Order History</h4>
+        <div class="mb-4  d-flex gap-2 mb-4">
+            <input type="text" id="Order_search" class="form-control search-input"  placeholder="Order ID">
+        </div>
+
+        <div class="table-card p-3 mt-4">
+            <h5 class="mb-3">Order History</h5>
+
+            <div class="table-responsive">
+                <table class="table table-borderless align-middle">
+                    <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Total</th>
+                        <th>Date</th>
+
+                    </tr>
+                    </thead>
+
+                    <tbody id="order_history_tbody">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </section>
+
 </main>
 <script src="assets/lib/jquery-4.0.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-<script src="controller/LoginController.js"></script>
-<script src="controller/asidecontroller.js"></script>
+<script type="module" src="controller/LoginController.js"></script>
+<script type="module" src="controller/asidecontroller.js"></script>
 <script type="module" src="controller/DashboardController.js"></script>
 <script type="module" src="controller/CustomerController.js"></script>
 <script type="module" src="controller/itemsController.js"></script>
 <script type="module" src="model/CustomerModel.js"></script>
 <script type="module" src="model/ItemModel.js"></script>
+
+<script type="module" src="controller/placeOrderController.js"></script>
+<script type="module" src="model/OrderModel.js"></script>
+<script type="module" src="controller/OrderHistoryController.js"></script>
 </body>
 </html>
 

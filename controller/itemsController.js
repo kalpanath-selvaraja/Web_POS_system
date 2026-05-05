@@ -1,19 +1,18 @@
 
 import{getItemData,deleteItem,getItemDataById,addItem,updateItem} from '../model/ItemModel.js'
-
+import{showAlert} from '../utils/alerts.js';
 // loadItemTable
 export const loadItemData = () => {
     $('#items_tbody').empty();
 
-    console.log("Items loaded");
 
     let item_db = getItemData();
 
-    console.log(item_db);
+
 
     item_db.forEach((item, index) => {
 
-        console.log(item.id);
+
         let new_row =
             `<tr data-index="${index}"> 
                     <td>${item.id}</td>
@@ -94,27 +93,11 @@ $(document).ready(function(){
         let index = $(this).closest('tr').data('index');
         let item = getItemData()[index];
 
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-
-                deleteItem(item.id);
-                loadItemData();
-
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                });
-            }
-        });
+        if (window.confirm(`Are you sure you want to delete "${item.name}"?`)) {
+            deleteItem(item.id);
+            loadItemData();
+            showAlert("Item deleted successfully.", "success");
+        }
 
 
     });
@@ -123,7 +106,7 @@ $(document).ready(function(){
     // Save and update Item
     $('#items_btn_save').on('click', function () {
 
-        console.log("save");
+
 
         $('#item_id_input').prop('readonly', false);
 
@@ -136,27 +119,27 @@ $(document).ready(function(){
         document.activeElement.blur();
 
         if (id === "") {
-            Swal.fire({ icon: "error", title: "Invalid ID!" });
+            showAlert("ID is required!", "danger");
             return;
         }
 
         if (name === "") {
-            Swal.fire({ icon: "error", title: "Name is required!" });
+            showAlert("Name is required!", "danger");;
             return;
         }
 
         if (price === "") {
-            Swal.fire({ icon: "error", title: "Price is Invalid!" });
+            showAlert("price is required!", "danger");
             return;
         }
 
         if (qty === "") {
-            Swal.fire({ icon: "error", title: "Quantity is Invalid!" });
+            showAlert("quantity is required!", "danger");
             return;
         }
 
         if (category === "") {
-            Swal.fire({ icon: "error", title: "Category is required!" });
+            showAlert("Category is required!", "danger");
             return;
         }
 
@@ -165,22 +148,19 @@ $(document).ready(function(){
 
 
             if (getItemDataById(id)) {
-                Swal.fire({ icon: "error", title: "ID already exists!" });
+                showAlert("ID already exists!", "danger");
                 return;
             }
 
-            console.log(id, name, price, qty, category);
             addItem(id, name, price, qty, category);
+            showAlert("Item saved successfully!", "success");
             $('#customerForm')[0].reset();
-            Swal.fire({
-                icon: "success",
-                title: "Customer Saved Successfully!"
-            });
+
 
         }else{
             updateItem(id, name, price, qty, category);
 
-            Swal.fire({ icon: "success", title: "Customer Updated Successfully!" });
+            showAlert("Item updated successfully!", "success");
             $('#itemsForm')[0].reset();
             itemUpdate = false;
         }

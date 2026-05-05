@@ -1,7 +1,8 @@
 import {getCustomerData} from "../model/CustomerModel.js";
-import {addItem, getItemData,updateItem} from "../model/ItemModel.js";
-import {getOrderData, addOrder}  from "../model/OrderModel.js";
-import {customer_db} from "../db/database";
+import {getItemData,updateItem} from "../model/ItemModel.js";
+import {addOrder}  from "../model/OrderModel.js";
+import {showAlert}  from "../utils/alerts.js";
+
 
 $(document).ready(function () {
 
@@ -256,12 +257,12 @@ $(document).ready(function () {
     $('#checkout_btn').on('click', function () {
 
         if (!selectedCustomer) {
-            Swal.fire({ icon: "warning", title: "Please select a customer!" });
+            showAlert("Please select a customer!", "warning");
             return;
         }
 
         if ($('#Order_tbody tr').length === 0) {
-            Swal.fire({ icon: "warning", title: "No items in cart!" });
+            showAlert("No items in cart!", "warning");
             return;
         }
 
@@ -272,11 +273,7 @@ $(document).ready(function () {
             let currentItem = getItemData().find(i => i.id === id);
 
             if (!currentItem || currentItem.qty < qty) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Not Enough Stock!",
-                    text: `${currentItem ? currentItem.name : id} only has ${currentItem ? currentItem.qty : 0} in stock.`
-                });
+                showAlert(`${currentItem ? currentItem.name : id} only has ${currentItem ? currentItem.qty : 0} in stock.`, "danger");
                 stockError = true;
                 return false;
             }
@@ -337,10 +334,7 @@ $(document).ready(function () {
 
         selectedCustomer = null;
         updateSummaryUI();
-        Swal.fire({
-            icon: "success",
-            title: "Customer Saved Successfully!"
-        });
+        showAlert("Order placed successfully!", "success");
     })
 
     // remove btn

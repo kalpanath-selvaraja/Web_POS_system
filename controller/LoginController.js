@@ -1,3 +1,4 @@
+import { showAlert } from "../utils/alerts.js";
 $(document).ready(function () {
 
 
@@ -36,33 +37,25 @@ $(document).ready(function () {
             sessionStorage.setItem("username", username);
             $('#greetings').text("Welcome Back, " + username);
 
-            // switch UI
-            Swal.fire({
-                title: "Login Successful!",
-                text: "Welcome back " + username,
-                icon: "success",
-                confirmButtonText: "Continue"
-            }).then(() => {
 
+                showAlert("Logged in successfully!");
 
                 // redirect or show dashboard
                 showApp();
-            });
+
 
         }else {
-            Swal.fire({
-                title: "Login Failed!",
-                text: "Invalid username or password",
-                icon: "error",
-            })
+            showAlert("Invalid username or password", "danger");
         }
 
     }
 
     // logout feature
     function logout() {
-        sessionStorage.removeItem("username");
-        showLogin();
+        if (window.confirm("Are you sure you want to log out?")) {
+            sessionStorage.removeItem("username");
+            showLogin();
+        }
 
     }
 
